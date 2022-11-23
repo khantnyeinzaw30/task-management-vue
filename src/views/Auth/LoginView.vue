@@ -30,7 +30,7 @@
                 id="email"
                 class="form-control"
                 :class="{ 'is-invalid': logginFailed }"
-                v-model="employeeData.email"
+                v-model="loginData.email"
                 placeholder="Email address here"
               />
             </div>
@@ -42,7 +42,7 @@
                 id="password"
                 class="form-control"
                 :class="{ 'is-invalid': logginFailed }"
-                v-model="employeeData.password"
+                v-model="loginData.password"
                 placeholder="Password here"
               />
             </div>
@@ -71,7 +71,7 @@ export default {
   name: "LoginView",
   data() {
     return {
-      employeeData: {
+      loginData: {
         email: "",
         password: "",
       },
@@ -82,7 +82,7 @@ export default {
   methods: {
     login() {
       this.axios
-        .post("http://localhost:8000/api/login", this.employeeData)
+        .post("http://localhost:8000/api/login", this.loginData)
         .then((response) => {
           if (response.data.token) {
             this.$store.dispatch("storeToken", response.data.token);
@@ -103,8 +103,8 @@ export default {
     },
     // clear input
     clearInput() {
-      this.employeeData.email = "";
-      this.employeeData.password = "";
+      this.loginData.email = "";
+      this.loginData.password = "";
     },
   },
 };

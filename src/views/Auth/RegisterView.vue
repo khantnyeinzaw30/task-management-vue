@@ -16,7 +16,7 @@
             <p class="mb-6">Please enter your user information.</p>
           </div>
           <!-- Form -->
-          <form @submit.prevent="">
+          <form @submit.prevent="register">
             <!-- Username -->
             <div class="mb-3">
               <label for="username" class="form-label">User Name</label>
@@ -50,7 +50,7 @@
                 placeholder="........."
               />
             </div>
-            <!-- Password -->
+            <!-- Password confirm -->
             <div class="mb-3">
               <label for="confirm-password" class="form-label"
                 >Confirm Password</label
@@ -97,7 +97,27 @@ export default {
         password: "",
         passwordConfirmation: "",
       },
+      isRequired: "",
+      isPasswordConfirmed: "",
     };
+  },
+  methods: {
+    register() {
+      if (
+        !this.registerData.name ||
+        !this.registerData.email ||
+        !this.registerData.password
+      ) {
+        this.isRequired = "Please fill all info!";
+      } else if (
+        this.registerData.password !== this.registerData.passwordConfirmation
+      ) {
+        this.isPasswordConfirmed =
+          "Password and password confirmation did't match!";
+      } else {
+        console.log(this.registerData);
+      }
+    },
   },
 };
 </script>
