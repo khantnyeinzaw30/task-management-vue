@@ -1,38 +1,29 @@
 <template>
   <div class="row">
-    <div class="col-lg-6 offset-3">
-      <!-- task table -->
-      <div class="table-responsive">
-        <table class="table">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="col-md-12 col-12">
+      <!-- card  -->
+      <div class="card">
+        <!-- card header  -->
+        <div class="card-header bg-white border-bottom-0 py-4">
+          <h4 class="mb-0">Assign Tasks</h4>
+        </div>
+        <!-- table  -->
+        <div class="table-responsive">
+          <table class="table text-nowrap mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Task name</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Project</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
