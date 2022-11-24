@@ -91,11 +91,11 @@ export default {
             });
           } else if (response.data.message) {
             this.authFailed = response.data.message;
-            this.clearInput();
             this.logginFailed = false;
+            this.clearInput();
           } else {
             this.logginFailed = true;
-            this.authFailed = false;
+            this.authFailed = "";
             this.clearInput();
           }
         })
