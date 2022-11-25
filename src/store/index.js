@@ -2,14 +2,23 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    token: "",
+    userData: {},
   },
-  getters: {},
+  getters: {
+    getToken: () => {
+      const user = JSON.parse(localStorage.getItem("userData"));
+      return user.token;
+    },
+  },
   mutations: {},
   actions: {
-    storeToken: ({ state }, value) => {
-      state.token = value;
-      localStorage.setItem("userToken", JSON.stringify(state.token));
+    storeUserData: ({ state }, value) => {
+      state.userData = value;
+      localStorage.setItem("userData", JSON.stringify(state.userData));
+    },
+    removeUserData: ({ state }) => {
+      state.userData = {};
+      localStorage.removeItem("userData");
     },
   },
   modules: {},

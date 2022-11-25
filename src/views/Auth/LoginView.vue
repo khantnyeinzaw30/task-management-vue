@@ -85,17 +85,16 @@ export default {
         .post("http://localhost:8000/api/login", this.loginData)
         .then((response) => {
           if (response.data.token) {
-            this.$store.dispatch("storeToken", response.data.token);
+            console.log(response.data);
+            this.$store.dispatch("storeUserData", response.data);
             this.$router.push({
               name: "home",
             });
-          } else if (response.data.message) {
+          } else if (response.data.status == "Auth Failed!") {
             this.authFailed = response.data.message;
-            this.logginFailed = false;
             this.clearInput();
-          } else {
+          } else if (response.data.status == "Login Failed!") {
             this.logginFailed = true;
-            this.authFailed = "";
             this.clearInput();
           }
         })

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-12 col-12">
       <!-- card  -->
-      <div class="card">
+      <div class="card" v-if="tasks.length">
         <!-- card header  -->
         <div class="card-header bg-white border-bottom-0 py-4">
           <h4 class="mb-0">Assign Tasks</h4>
@@ -29,6 +29,7 @@
                           href="#"
                           class="text-inherit"
                           style="letter-spacing: 0.7px"
+                          @click="showTaskDetails(task.id)"
                           >{{ task.name }}</a
                         >
                       </h5>
@@ -49,9 +50,9 @@
                   >
                 </td>
                 <td class="align-middle">
-                  <a href="#">
+                  <router-link to="/projects">
                     {{ task.project_name }}
-                  </a>
+                  </router-link>
                 </td>
                 <td class="align-middle">
                   <div class="float-start">
@@ -85,23 +86,36 @@
           </table>
         </div>
       </div>
+      <div class="alert alert-warning" v-else>
+        <code class="fs-3">You have been assigned no task!</code>
+        <br />
+        <code>or You will have to log in first to see the assigned tasks.</code>
+      </div>
+    </div>
+    <div class="col-lg-6 offset-lg-3 mt-3" v-if="showTask">
+      <TaskView :taskId="this.taskId" @update="updateTaskStatus" />
     </div>
   </div>
 </template>
 
 <script>
+import TaskView from "../components/TaskView.vue";
 export default {
   name: "HomeView",
+  components: { TaskView },
   data() {
     return {
       tasks: [],
       token: "",
+      employeeCode: "",
+      showTask: false,
+      taskId: "",
     };
   },
   methods: {
     getTasks() {
       this.axios
-        .get("http://localhost:8000/api/tasks", {
+        .get("http://localhost:8000/api/assigned_tasks/" + this.employeeCode, {
           headers: {
             Authorization: "Bearer " + this.token,
           },
@@ -111,29 +125,17 @@ export default {
         })
         .catch((error) => console.log(error));
     },
-    // handleTaskStatus(taskId) {
-    //   // console.log("ID = " + taskId, "Status = " + this.taskStatus);
-    //   this.axios
-    //     .post(
-    //       "http://localhost:8000/api/change/task_status",
-    //       {
-    //         taskId,
-    //         taskStatus: this.taskStatus,
-    //       },
-    //       {
-    //         headers: {
-    //           Authorization: "Bearer " + this.token,
-    //         },
-    //       }
-    //     )
-    //     .then((response) => {
-    //       console.log(response.data);
-    //     })
-    //     .catch((error) => console.log(error.message));
-    // },
+    showTaskDetails(taskId) {
+      this.taskId = taskId;
+      this.showTask = true;
+    },
   },
   mounted() {
-    this.token = JSON.parse(localStorage.getItem("userToken"));
+    const user = JSON.parse(localStorage.getItem("userData"));
+    if (user) {
+      this.token = user.token;
+      this.employeeCode = user.employee_code;
+    }
     if (this.token) {
       this.getTasks();
     }

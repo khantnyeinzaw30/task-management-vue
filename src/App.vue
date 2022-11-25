@@ -16,9 +16,20 @@
             </router-link>
           </li>
           <li class="nav-item">
+            <router-link class="nav-link" :to="{ name: 'projects' }"
+              ><i class="fa-solid fa-diagram-project nav-icon icon-xs me-2"></i>
+              Projects</router-link
+            >
+          </li>
+          <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'login' }">
               <i class="fa-solid fa-lock-open nav-icon icon-xs me-2"></i> Login
             </router-link>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <button class="btn btn-danger" @click="logout">Logout</button>
+            </a>
           </li>
         </ul>
       </div>
@@ -39,3 +50,16 @@
   -moz-osx-font-smoothing: grayscale;
 }
 </style>
+
+<script>
+import { mapActions } from "vuex";
+export default {
+  methods: {
+    ...mapActions(["removeUserData"]),
+    logout() {
+      this.removeUserData();
+      this.$router.push({ name: "login" });
+    },
+  },
+};
+</script>

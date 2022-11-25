@@ -79,7 +79,7 @@
                 id="employee-code"
                 class="form-control"
                 v-model="registerData.employeeCode"
-                placeholder="eg . 039kdoap4 or something like this"
+                placeholder="eg . TMS-123456 or something like this"
               />
               <button
                 type="button"
@@ -149,7 +149,7 @@ export default {
           .post("http://localhost:8000/api/register", this.registerData)
           .then((response) => {
             if (response.data.token) {
-              this.$store.dispatch("storeToken", response.data.token);
+              this.$store.dispatch("storeUserData", response.data);
               this.$router.push({ name: "home" });
             }
           })
@@ -157,7 +157,8 @@ export default {
       }
     },
     generateEmployeeCode() {
-      this.registerData.employeeCode = "TMS_" + Date.now();
+      this.registerData.employeeCode =
+        "TMS-" + Math.floor(Math.random() * 100000);
     },
   },
 };
