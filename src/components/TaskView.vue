@@ -26,10 +26,7 @@
         </strong>
         <div>
           <strong
-            >Project :
-            <router-link to="/projects">{{
-              task.project_name
-            }}</router-link></strong
+            >Project : <a href="#"> {{ task.project_name }}</a></strong
           >
         </div>
       </div>
@@ -55,6 +52,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "TaskView",
   props: ["taskId"],
@@ -65,9 +63,7 @@ export default {
     };
   },
   computed: {
-    getToken() {
-      return this.$store.getters.getToken;
-    },
+    ...mapGetters(["getToken"]),
   },
   methods: {
     getTask() {
@@ -97,11 +93,6 @@ export default {
             },
           }
         )
-        .then((response) => {
-          if (response.data.status == "success") {
-            console.log("task is done");
-          }
-        })
         .catch((error) => console.log(error.message));
     },
   },

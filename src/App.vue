@@ -16,12 +16,6 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'projects' }"
-              ><i class="fa-solid fa-diagram-project nav-icon icon-xs me-2"></i>
-              Projects</router-link
-            >
-          </li>
-          <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'login' }">
               <i class="fa-solid fa-lock-open nav-icon icon-xs me-2"></i> Login
             </router-link>

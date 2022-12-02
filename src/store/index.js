@@ -9,6 +9,10 @@ export default createStore({
       const user = JSON.parse(localStorage.getItem("userData"));
       return user.token;
     },
+    getEmployeeCode: () => {
+      const user = JSON.parse(localStorage.getItem("userData"));
+      return user.employee_code;
+    },
   },
   mutations: {},
   actions: {
