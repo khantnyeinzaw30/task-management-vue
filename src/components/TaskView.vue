@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import getUserData from "@/assets/getUserData";
 export default {
   name: "TaskView",
   props: ["taskId"],
@@ -60,17 +60,15 @@ export default {
     return {
       task: null,
       taskStatus: "0",
+      token: "",
     };
-  },
-  computed: {
-    ...mapGetters(["getToken"]),
   },
   methods: {
     getTask() {
       this.axios
         .get("http://localhost:8000/api/task-details/" + this.taskId, {
           headers: {
-            Authorization: "Bearer " + this.getToken,
+            Authorization: "Bearer " + this.token,
           },
         })
         .then((response) => {
@@ -89,7 +87,7 @@ export default {
           },
           {
             headers: {
-              Authorization: "Bearer " + this.getToken,
+              Authorization: "Bearer " + this.token,
             },
           }
         )
@@ -97,7 +95,9 @@ export default {
     },
   },
   mounted() {
-    if (this.getToken) {
+    const user = getUserData();
+    if (user) {
+      this.token = user.token;
       this.getTask();
     }
   },

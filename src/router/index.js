@@ -17,6 +17,10 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
+    beforeEnter: (to, from, next) => {
+      if (!localStorage.getItem("userData")) next();
+      else next({ name: "register" });
+    },
   },
   {
     path: "/register",

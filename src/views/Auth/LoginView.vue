@@ -85,7 +85,6 @@ export default {
         .post("http://localhost:8000/api/login", this.loginData)
         .then((response) => {
           if (response.data.token) {
-            console.log(response.data);
             this.$store.dispatch("storeUserData", response.data);
             this.$router.push({
               name: "home",

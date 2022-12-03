@@ -37,7 +37,7 @@
                   </div>
                 </td>
                 <td class="align-middle">
-                  <span class="badge text-info" v-if="task.priority == '0'"
+                  <span class="badge text-bg-info" v-if="task.priority == '0'"
                     >Low</span
                   >
                   <span
@@ -156,8 +156,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import TaskView from "../components/TaskView.vue";
+import getUserData from "../assets/getUserData.js";
+
 export default {
   name: "HomeView",
   components: { TaskView },
@@ -167,10 +168,9 @@ export default {
       projects: [],
       showTask: false,
       taskId: "",
+      token: "",
+      employeeCode: "",
     };
-  },
-  computed: {
-    ...mapGetters(["getToken", "getEmployeeCode"]),
   },
   methods: {
     getTasks() {
@@ -178,11 +178,11 @@ export default {
         .post(
           "http://localhost:8000/api/assigned-tasks",
           {
-            employeeCode: this.getEmployeeCode,
+            employeeCode: this.employeeCode,
           },
           {
             headers: {
-              Authorization: "Bearer " + this.getToken,
+              Authorization: "Bearer " + this.token,
             },
           }
         )
@@ -195,7 +195,7 @@ export default {
       this.axios
         .get("http://localhost:8000/api/projects", {
           headers: {
-            Authorization: "Bearer " + this.getToken,
+            Authorization: "Bearer " + this.token,
           },
         })
         .then((response) => {
@@ -219,7 +219,7 @@ export default {
           },
           {
             headers: {
-              Authorization: "Bearer " + this.getToken,
+              Authorization: "Bearer " + this.token,
             },
           }
         )
@@ -231,8 +231,11 @@ export default {
     },
   },
   mounted() {
-    if (this.getToken) {
-      if (this.getEmployeeCode) {
+    const { token, employee_code } = getUserData();
+    if (token) {
+      this.token = token;
+      if (employee_code) {
+        this.employeeCode = employee_code;
         this.getTasks();
       }
       this.getProjects();
